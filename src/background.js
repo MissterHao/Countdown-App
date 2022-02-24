@@ -15,8 +15,20 @@ async function createWindow() {
     const win = new BrowserWindow({
         width: 800,
         height: 600,
-        webPreferences: {
+        frame: false,
+        fullscreenable: false,
+        center: false, // center application on screen
+        backgroundColor: '#fff', // for transparent and frameless window
+        resizable: false,
+        transparent: true, // for macOS
+        vibrancy: 'ultra-dark', // for macOS
 
+        titleBarStyle: 'hidden', // hidden、hiddenInset、customButtonsOnHover
+        titleBarOverlay: {
+            color: '#2f3241',
+            symbolColor: '#74b1be'
+        },
+        webPreferences: {
             // Use pluginOptions.nodeIntegration, leave this alone
             // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
             nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
@@ -27,7 +39,7 @@ async function createWindow() {
     if (process.env.WEBPACK_DEV_SERVER_URL) {
         // Load the url of the dev server if in development mode
         await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
-        if (!process.env.IS_TEST) win.webContents.openDevTools()
+        // if (!process.env.IS_TEST) win.webContents.openDevTools()
     } else {
         createProtocol('app')
         // Load the index.html when not in development
