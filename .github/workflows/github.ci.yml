@@ -1,4 +1,4 @@
-name: Github Actions for Continous Intergrations
+name: Continous Intergrations
 
 on: [push]
 
