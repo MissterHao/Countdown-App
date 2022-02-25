@@ -10,24 +10,37 @@ protocol.registerSchemesAsPrivileged([
     { scheme: 'app', privileges: { secure: true, standard: true } }
 ])
 
+const mainApplicationWidth = 500;
+const mainApplicationHeight = 500;
+
 async function createWindow() {
+
+    let display = electron.screen.getPrimaryDisplay();
+    let width = display.bounds.width;
+
+
     // Create the browser window.
     const win = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: mainApplicationWidth,
+        height: mainApplicationHeight,
+
+        // x: 100,
+        // y: 100,
+
         frame: false,
+        transparent: true, // for macOS
         fullscreenable: false,
+
         center: false, // center application on screen
         backgroundColor: '#fff', // for transparent and frameless window
         resizable: false,
-        transparent: true, // for macOS
         vibrancy: 'ultra-dark', // for macOS
 
-        titleBarStyle: 'hidden', // hidden、hiddenInset、customButtonsOnHover
-        titleBarOverlay: {
-            color: '#2f3241',
-            symbolColor: '#74b1be'
-        },
+        titleBarStyle: 'hidden', // hidden,hiddenInset,customButtonsOnHover
+        // titleBarOverlay: {
+        //     color: '#2f3241',
+        //     symbolColor: '#74b1be'
+        // },
         webPreferences: {
             // Use pluginOptions.nodeIntegration, leave this alone
             // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
@@ -35,6 +48,16 @@ async function createWindow() {
             contextIsolation: !process.env.ELECTRON_NODE_INTEGRATION
         }
     })
+    win.setAlwaysOnTop(true, "floating");
+
+    // var mainScreen = screenElectron.getPrimaryDisplay();
+    // var dimensions = mainScreen.size;
+
+    win.setPosition(
+        // dimensions.width - mainApplicationWidth,
+        // dimensions.height - mainApplicationHeight
+        0, 0,
+    )
 
     if (process.env.WEBPACK_DEV_SERVER_URL) {
         // Load the url of the dev server if in development mode
